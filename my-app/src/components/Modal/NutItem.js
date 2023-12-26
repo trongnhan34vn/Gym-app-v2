@@ -2,7 +2,7 @@ import React from 'react'
 import { Image, Text, View } from 'react-native'
 import { RadioButton } from 'react-native-paper';
 
-const NutItem = ({nutrition, checkedNuts, setCheckedNuts}) => {
+const NutItem = ({ nutrition, checkedNuts, setCheckedNuts }) => {
 
   const removeFromArray = (arr, value) => {
     const index = arr.indexOf(value);
@@ -33,7 +33,7 @@ const NutItem = ({nutrition, checkedNuts, setCheckedNuts}) => {
     <View className="bg-[#A1BDD914] mt-5 px-4 py-2 rounded-[5px]">
       <View className="flex flex-row justify-between w-full border-b-[1px] border-b-[#A1BDD914] pb-2 mb-1">
         <View className="flex flex-row flex-1 gap-4">
-          <Image className="w-16 h-16 rounded-[5px]" source={{uri: nutrition.image}} />
+          <Image className="w-16 h-16 rounded-[5px]" source={{ uri: nutrition.image }} />
           <View>
             {/* <Text className="font-bold text-[18px] mb-2 text-white">{getMeal()}</Text> */}
             <Text className="font-bold text-[18px] mb-2 text-white">{nutrition.name}</Text>
@@ -45,7 +45,7 @@ const NutItem = ({nutrition, checkedNuts, setCheckedNuts}) => {
           <Entypo className="" name="plus" size={24} color="white" />
         </View> */}
         <View className="flex justify-center">
-          <RadioButton 
+          <RadioButton
             value={nutrition._id}
             status={checkNut()}
             onPress={() => onCheck()}

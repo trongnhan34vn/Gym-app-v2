@@ -13,6 +13,7 @@ const AssignNutritionForm = ({checkedNuts, setCheckedNuts}) => {
   }, [])
 
   const nutritions = useSelector(nutritionSelector).nutritions;
+
   return (
     <ScrollView>
       {nutritions.map((nut, index) => {

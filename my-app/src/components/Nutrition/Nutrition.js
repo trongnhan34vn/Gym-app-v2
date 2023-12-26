@@ -7,7 +7,7 @@ import { formatDate } from '../../utils/utils';
 import DatePicker from '../DatePicker/DatePicker';
 import { useRoute } from '@react-navigation/native';
 
-const Nutrition = ({ nutritions, date, setDate, selectAssign, assign, setIsAssignNut, setToggleModal }) => {
+const Nutrition = ({ nutritions, date, setDate, selectAssign, assign, setIsAssignNut, setToggleModal, setCreateAssign }) => {
   const route = useRoute();
   const getMeasure = (type) => {
     if (!selectAssign) return {
@@ -62,8 +62,8 @@ const Nutrition = ({ nutritions, date, setDate, selectAssign, assign, setIsAssig
         </View>
       </View>}
 
-      <DatePicker assign={assign} selectAssign={selectAssign} open={open} setOpen={setOpen} setDate={setDate} date={date} />
-      <Pressable onPress={() => setOpen(true)} className="flex flex-row items-center justify-between mx-4">
+      <DatePicker setCreateAssign={setCreateAssign} assign={assign} selectAssign={selectAssign} open={open} setOpen={setOpen} setDate={setDate} date={date} />
+      <Pressable onPress={() => setOpen(true)} className="flex flex-row items-center justify-between mx-4 mb-5">
         <MaterialIcons name="keyboard-arrow-left" size={24} color="#B6C2CF" />
         <Text className="text-[#B6C2CF] text-center">{formatDate(date).toLocaleUpperCase()}</Text>
         <MaterialIcons name="keyboard-arrow-right" size={24} color="#B6C2CF" />

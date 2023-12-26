@@ -5,5 +5,6 @@ const router = express.Router();
 router.get('/user/date', AssignmentController.findByUserAndDate)
 router.get('/assign/:id', AssignmentController.findById)
 router.patch('/assign/:id', AssignmentController.update)
+router.post('/assign', AssignmentController.create)
 
 module.exports = router;

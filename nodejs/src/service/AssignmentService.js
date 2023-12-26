@@ -15,6 +15,10 @@ class AssignmentService extends Service {
     return await new AssignmentRepository().findByUserAndPT(user, pt);
   }
 
+  async findByUserPTAndDate(user, pt, date) {
+    return await new AssignmentRepository().findByUserPTAndDate(user, pt, date);
+  }
+
   async update(id, data) {
     let oldAssign = await this.findById(id);
 
@@ -22,6 +26,8 @@ class AssignmentService extends Service {
       status: 500,
       message: 'Something went wrong'
     }
+
+    // console.log('oldAssign ------->', oldAssign);
     const { exercises, nutritions } = data;
     let newAssign;
     if (exercises) {

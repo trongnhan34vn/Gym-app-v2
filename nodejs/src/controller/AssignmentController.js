@@ -53,6 +53,25 @@ class AssignmentController {
     }
   }
 
+  async create(req, res, next) {
+    try {
+      const data = req.body;
+      const assignDuplicated = await new AssignmentService().findByUserPTAndDate(data.user, data.pt, data.date);
+      if (!assignDuplicated) {
+        const assign = await new AssignmentService().save(data);
+        if (!assign) {
+          return res.status(INTERNAL_SERVER_ERROR).json(new ResponseMessage(500, 'Internal Server Error'));
+        }
+        return res.status(OK).json(new ResponseMessage(200, 'Create Assign Success', assign));
+      }
+
+      return res.status(OK).json(new ResponseMessage(200, 'Already Assigned'));
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
 }
 
 module.exports = new AssignmentController();

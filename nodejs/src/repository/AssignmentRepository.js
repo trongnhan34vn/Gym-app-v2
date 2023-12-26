@@ -34,6 +34,11 @@ class AssignmentRepository extends Repository {
     return assign
   }
 
+  async findByUserPTAndDate (user, pt, date) {
+    let assign = await Assignment.findOne({user, pt, date})
+    return assign
+  }
+
 }
 
 module.exports = AssignmentRepository;

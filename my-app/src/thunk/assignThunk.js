@@ -1,4 +1,4 @@
-import { FIND_BY_ID, FIND_BY_USER_DATE, UPDATE } from "../api/services/assignService";
+import { CREATE, FIND_BY_ID, FIND_BY_USER_DATE, UPDATE } from "../api/services/assignService";
 import { getPTAssigns, getSelectAssign, getUserAssign } from "../redux/reducer/assignSlice";
 
 export const findByUserAndDate = (data) => {
@@ -41,6 +41,20 @@ export const update = (data) => {
       dispatch(getSelectAssign(response));
     } catch (error) {
       console.log(error);
+    }
+  }
+}
+
+export const create = (data) => {
+  return async function createThunk(dispatch) {
+    try {
+      let response = await CREATE(data);
+      console.log(response);
+      if (response.message !== 'Already Assigned') {
+        dispatch(getSelectAssign(response));
+      }
+    } catch (error) {
+      
     }
   }
 }

@@ -7,8 +7,8 @@ const assignmentSchema = new Schema({
   nutritions: [{ type: Schema.Types.ObjectId, ref: 'Nutrition' }],
   date: { type: Number, required: true },
   user: { type: Schema.Types.ObjectId, ref: 'User' },
-  startTime: { type: Number, required: true },
-  endTime: { type: Number, required: true }
+  startTime: { type: Number },
+  endTime: { type: Number }
 }, {
   timestamps: true,
   collection: 'assignments'

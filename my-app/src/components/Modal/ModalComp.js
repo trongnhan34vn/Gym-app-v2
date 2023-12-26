@@ -7,10 +7,12 @@ import { useDispatch } from 'react-redux'
 import { update } from '../../thunk/assignThunk';
 import AssignNutritionForm from '../Nutrition/AssignNutritionForm';
 
-const ModalComp = ({ isOpenModal, setOpenModal, isAssignExercise, assign, isAssignNut }) => {
+const ModalComp = ({ isOpenModal, setOpenModal, isAssignExercise, assign, isAssignNut, setIsAssignNut, setIsAssignExercise }) => {
   const dispatch = useDispatch();
   const closeModal = () => {
     setOpenModal(false);
+    setIsAssignExercise(false);
+    setIsAssignNut(false);
   }
 
   const [checkedExes, setCheckedExes] = useState([])
@@ -23,12 +25,12 @@ const ModalComp = ({ isOpenModal, setOpenModal, isAssignExercise, assign, isAssi
       return
     };
     let arr = [];
-    assign.exercises.forEach(element => {
+    assign.data.exercises.forEach(element => {
       arr.push(element._id)
     });
     setCheckedExes(arr)
     let nutArr = [];
-    assign.nutritions.forEach(element => {
+    assign.data.nutritions.forEach(element => {
       nutArr.push(element._id)
     })
     setCheckedNuts(nutArr)
@@ -39,23 +41,20 @@ const ModalComp = ({ isOpenModal, setOpenModal, isAssignExercise, assign, isAssi
     if (isAssignExercise) {
       // update assign
       let data = {
-        assignId: assign._id,
+        assignId: assign.data._id,
         exercises: checkedExes
       }
       closeModal()
       dispatch(update(data));
     }
-
     if (isAssignNut) {
       let data = {
-        assignId: assign._id,
+        assignId: assign.data._id,
         nutritions: checkedNuts
       }
       closeModal()
       dispatch(update(data));
     }
-    // create assign 
-
   }
 
   return (

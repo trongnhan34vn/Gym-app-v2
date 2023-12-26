@@ -11,7 +11,11 @@ export const FIND_BY_ID = async (id) => {
 }
 
 export const UPDATE = async (data) => {
-  console.log(data.assignId);
   let response = await instance.patch(`/assigns/assign/${data.assignId}`, data);
+  return response.data;
+}
+
+export const CREATE = async (data) => {
+  let response = await instance.post(`/assigns/assign`, data);
   return response.data;
 }

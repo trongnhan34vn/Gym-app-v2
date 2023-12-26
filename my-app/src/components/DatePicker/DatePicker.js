@@ -4,10 +4,11 @@ import { DatePickerModal } from 'react-native-paper-dates';
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useDispatch } from 'react-redux'
 import { findByUserAndDate } from '../../thunk/assignThunk';
+import { useRoute } from '@react-navigation/native'
 
-const DatePicker = ({ open, date, setOpen, setDate, selectAssign, assign }) => {
+const DatePicker = ({ open, date, setOpen, setDate, selectAssign, assign, setCreateAssign }) => {
+  const route = useRoute();
   const dispatch = useDispatch();
-
   const onDismissSingle = React.useCallback(() => {
     setOpen(false);
   }, [setOpen]);
@@ -28,6 +29,8 @@ const DatePicker = ({ open, date, setOpen, setDate, selectAssign, assign }) => {
       }
       console.log(data);
       dispatch(findByUserAndDate(data))
+      if (route.name === 'Lịch trình') return;
+      setCreateAssign(true)
     },
     [setOpen, setDate]
   );

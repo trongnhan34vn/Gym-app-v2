@@ -8,6 +8,7 @@ import SkeletonComp from '../components/Skeleton/SkeletonComp';
 import { useSelector } from 'react-redux'
 import { assignSelector } from '../redux/selector';
 import { useDispatch } from 'react-redux'
+import { create } from '../thunk/assignThunk';
 
 const CustomerExerciseDetailScreen = () => {
   const dispatch = useDispatch();
@@ -21,14 +22,40 @@ const CustomerExerciseDetailScreen = () => {
   const [assign, setAssign] = useState(null)
   const selectAssign = useSelector(assignSelector).selectAssign;
   const [date, setDate] = useState(assign ? assign.date : Date.now());
+  const [users, setUsers] = useState(null);
+  const [createAssign, setCreateAssign] = useState(false);
 
   useEffect(() => {
-    if (!selectAssign) return;
+    if(!createAssign) return ;
+    let data = {
+      _id: null,
+      user: users.user,
+      pt: users.pt,
+      date: date,
+      exercises: [],
+      nutritions: [],
+    }
+    console.log(data);
+    dispatch(create(data))
+
+    setTimeout(() => {
+      setCreateAssign(false)
+    }, 200)
+
+  }, [createAssign])
+
+
+  useEffect(() => {
+    if (!selectAssign) {
+      return
+    };
     setAssign(selectAssign.data);
   }, [selectAssign])
 
   useEffect(() => {
     if (!assign) return
+
+    setUsers({user: assign.user._id, pt: assign.pt})
     setDate(assign.date)
   }, [assign])
 
@@ -36,17 +63,6 @@ const CustomerExerciseDetailScreen = () => {
   const exercises = assign ? assign.exercises : null;
 
   const [isAssignNut, setIsAssignNut] = useState(false);
-
-  // useEffect(() => {
-  //   if (!assign) return
-  //   let data = {
-  //     user: assign.user._id,
-  //     date: date,
-  //     role: 'USER'
-  //   }
-  //   console.log(data);
-  //   dispatch(findByUserAndDate(data))
-  // }, [date, assign])
 
   return (
     <ScrollView className="bg-[#1D2125] h-screen">
@@ -78,7 +94,7 @@ const CustomerExerciseDetailScreen = () => {
         </View>
 
         <View className="mb-7">
-          {nutritions && <Nutrition setToggleModal={setToggleModal} setIsAssignNut={setIsAssignNut} assign={assign} selectAssign={selectAssign} nutritions={nutritions} date={date} setDate={setDate} />}
+          {nutritions && <Nutrition setCreateAssign={setCreateAssign} setToggleModal={setToggleModal} setIsAssignNut={setIsAssignNut} assign={assign} selectAssign={selectAssign} nutritions={nutritions} date={date} setDate={setDate} />}
         </View>
         {/* <View className="flex flex-row items-center justify-between mx-4">
           <MaterialIcons name="keyboard-arrow-left" size={24} color="#B6C2CF" />
@@ -113,7 +129,7 @@ const CustomerExerciseDetailScreen = () => {
         </View>
       </View>}
 
-      <ModalComp isAssignNut={isAssignNut} assign={selectAssign} assignExes={exercises} isOpenModal={toggleModal} setOpenModal={setToggleModal} isAssignExercise={isAssignExercise}  />
+      <ModalComp setIsAssignNut={setIsAssignNut} setIsAssignExercise={setIsAssignExercise} isAssignNut={isAssignNut} assign={selectAssign} assignExes={exercises} isOpenModal={toggleModal} setOpenModal={setToggleModal} isAssignExercise={isAssignExercise} />
     </ScrollView>
   )
 }
