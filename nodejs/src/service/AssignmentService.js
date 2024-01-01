@@ -28,14 +28,23 @@ class AssignmentService extends Service {
     }
 
     // console.log('oldAssign ------->', oldAssign);
-    const { exercises, nutritions } = data;
+    const { exercises, nutritions, lunch, dinner } = data;
+
     let newAssign;
     if (exercises) {
       newAssign = { ...oldAssign._doc, exercises };
     } else {
-      newAssign = { ...oldAssign._doc, nutritions };
-    }
+      if (nutritions) {
+        newAssign = { ...oldAssign._doc, nutritions };
+      }
 
+      if (lunch) {
+        newAssign = { ...oldAssign._doc, lunch };
+      }
+      if (dinner) {
+        newAssign = { ...oldAssign._doc, dinner };
+      }
+    }
 
     let saveAssign = await this.save(newAssign);
     let res = await this.findById(saveAssign._id);

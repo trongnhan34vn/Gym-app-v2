@@ -9,6 +9,10 @@ class MuscleRepository extends Repository {
   async findByName(name) {
     return await Muscle.findOne({ name: name });
   }
+
+  async findAll() {
+    return await Muscle.find().populate('exercises');
+  }
 }
 
 module.exports = MuscleRepository;

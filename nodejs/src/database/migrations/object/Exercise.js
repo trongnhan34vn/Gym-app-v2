@@ -3,14 +3,16 @@ class Exercise {
   name
   image
   difficult
+  steps
   sets
   time
   breakTime
   muscle
-  constructor(_id, name, image, difficult, sets, time, breakTime, muscle) {
+  constructor(_id, name, image, steps, difficult, sets, time, breakTime, muscle) {
     this._id = _id;
     this.name = name;
     this.image = image;
+    this.steps = steps;
     this.difficult = difficult;
     this.sets = sets;
     this.time = time;

@@ -32,7 +32,6 @@ const Navbar = () => {
   },[assign])
 
   const selectAssign = useSelector(assignSelector).selectAssign;
-  console.log(selectAssign);
 
   const renderScene = SceneMap({
     exercise: () => <Exercise exercises={exercises} date={assign ? assign.date : Date.now()} />,

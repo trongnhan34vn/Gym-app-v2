@@ -14,7 +14,6 @@ class AssignmentController {
     try {
       const { user, date, role } = req.query;
       let assign = await new AssignmentService().findByUserAndDate(user, date, role);
-      console.log(assign);
       if (!assign) {
         return res.status(INTERNAL_SERVER_ERROR).json(new ResponseMessage(500, 'Internal Server Error'));
       }
@@ -28,6 +27,7 @@ class AssignmentController {
   async findById(req, res, next) {
     try {
       const { id } = req.params
+
       let assign = await new AssignmentService().findById(id);
       if (!assign) {
         return res.status(INTERNAL_SERVER_ERROR).json(new ResponseMessage(500, 'Internal Server Error'));
@@ -59,12 +59,13 @@ class AssignmentController {
       const assignDuplicated = await new AssignmentService().findByUserPTAndDate(data.user, data.pt, data.date);
       if (!assignDuplicated) {
         const assign = await new AssignmentService().save(data);
+        console.log('assign ---->', assign);
         if (!assign) {
           return res.status(INTERNAL_SERVER_ERROR).json(new ResponseMessage(500, 'Internal Server Error'));
         }
         return res.status(OK).json(new ResponseMessage(200, 'Create Assign Success', assign));
       }
-
+      console.log('assignDup ------>' + assignDuplicated);
       return res.status(OK).json(new ResponseMessage(200, 'Already Assigned'));
 
     } catch (error) {

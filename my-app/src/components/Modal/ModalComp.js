@@ -30,11 +30,25 @@ const ModalComp = ({ isOpenModal, setOpenModal, isAssignExercise, assign, isAssi
     });
     setCheckedExes(arr)
     let nutArr = [];
-    assign.data.nutritions.forEach(element => {
-      nutArr.push(element._id)
-    })
+    switch (isAssignNut?.type) {
+      case 'nutritions':
+        assign.data.nutritions.forEach(element => {
+          nutArr.push(element._id)
+        })
+        break;
+      case 'lunch':
+        assign.data.lunch.forEach(element => {
+          nutArr.push(element._id)
+        })
+        break;
+      default:
+        assign.data.dinner.forEach(element => {
+          nutArr.push(element._id)
+        })
+        break;
+    }
     setCheckedNuts(nutArr)
-  }, [assign])
+  }, [assign, isOpenModal])
 
   const handleSubmit = () => {
     if (!assign) return
@@ -48,11 +62,28 @@ const ModalComp = ({ isOpenModal, setOpenModal, isAssignExercise, assign, isAssi
       dispatch(update(data));
     }
     if (isAssignNut) {
-      let data = {
-        assignId: assign.data._id,
-        nutritions: checkedNuts
-      }
+      let data;
       closeModal()
+      switch (isAssignNut.type) {
+        case 'nutritions':
+          data = {
+            assignId: assign.data._id,
+            nutritions: checkedNuts
+          }
+          break;
+        case 'lunch':
+          data = {
+            assignId: assign.data._id,
+            lunch: checkedNuts
+          }
+          break;
+        default:
+          data = {
+            assignId: assign.data._id,
+            dinner: checkedNuts
+          }
+          break;
+      }
       dispatch(update(data));
     }
   }
@@ -86,8 +117,8 @@ const ModalComp = ({ isOpenModal, setOpenModal, isAssignExercise, assign, isAssi
           <View>
             <View className="flex flex-row items-center justify-between gap-5 mb-5">
               <View className="flex flex-row items-center justify-between flex-1">
-                <Text className="font-bold text-white text-[16px]" >Lựa chọn bữa ăn ({checkedNuts.length}/3)</Text>
-                <Button onPress={handleSubmit} title='Save' className="self-center" />
+                <Text className="font-bold text-white text-[16px]" >Lựa chọn chế độ dinh dưỡng ({checkedNuts.length}/3)</Text>
+                <Button onPress={() => handleSubmit(isAssignNut.type)} title='Save' className="self-center" />
               </View>
 
               <Pressable onPress={() => closeModal()}><AntDesign name="close" size={24} color="white" /></Pressable>

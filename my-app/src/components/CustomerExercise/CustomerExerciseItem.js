@@ -3,7 +3,7 @@ import { Image, Pressable } from 'react-native'
 import { Text, View } from 'react-native'
 import { FontAwesome } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { useDispatch,useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { findById } from '../../thunk/assignThunk';
 import { formatTime } from '../../utils/utils';
 import { assignSelector } from '../../redux/selector';

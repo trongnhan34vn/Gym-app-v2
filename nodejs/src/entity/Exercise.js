@@ -5,6 +5,7 @@ const exerciseSchema = new Schema({
   name: { type: String, required: true },
   image: { type: String, required: true },
   difficult: { type: Number, required: true },
+  steps: { type: String },
   sets: { type: Number, required: true },
   time: { type: Number, required: true },
   breakTime: { type: Number, required: true },

@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
-import { Image, Text, View } from 'react-native'
+import { Image, Pressable, Text, View } from 'react-native'
 import Rating from '../Rating/Rating'
 import { RadioButton } from 'react-native-paper';
+import { useDispatch } from 'react-redux'
+import { useNavigation } from '@react-navigation/native';
+import { findById } from '../../thunk/exerciseThunk';
 
 const ExerciseItem = ({ exe, isAssignExercise, checkedExes, setCheckedExes }) => {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
   const checkExe = () => {
     if (checkedExes.includes(exe._id)) {
       return 'checked';
@@ -29,8 +34,13 @@ const ExerciseItem = ({ exe, isAssignExercise, checkedExes, setCheckedExes }) =>
       setCheckedExes(() => [...checkedExes, exe._id]);
     }
   }
+
+  const onSelect = () => {
+    dispatch(findById(exe._id));
+    navigation.navigate('ExerciseDetailScreen')
+  }
   return (
-    <View className="relative flex flex-row items-center justify-between w-full mb-5">
+    <Pressable onPress={onSelect} className="relative flex flex-row items-center justify-between w-full mb-5">
       <View className="flex flex-row">
         <Image className="w-16 h-16 rounded-[10px] mr-2" source={{ uri: exe?.image }} />
         <View className="flex justify-center">
@@ -50,7 +60,7 @@ const ExerciseItem = ({ exe, isAssignExercise, checkedExes, setCheckedExes }) =>
         <Image className="w-10 h-10 rounded-[5px]" source={{ uri: exe?.muscle?.image }} />
       </View>}
 
-    </View>
+    </Pressable>
   )
 }
 

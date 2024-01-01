@@ -49,7 +49,6 @@ export const create = (data) => {
   return async function createThunk(dispatch) {
     try {
       let response = await CREATE(data);
-      console.log(response);
       if (response.message !== 'Already Assigned') {
         dispatch(getSelectAssign(response));
       }

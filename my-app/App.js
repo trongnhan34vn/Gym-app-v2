@@ -11,6 +11,8 @@ import store from './src/redux/store';
 import { ToastProvider } from 'react-native-toast-notifications'
 import { MaterialIcons } from '@expo/vector-icons';
 import { enGB, registerTranslation } from 'react-native-paper-dates'
+import ExerciseDetailScreen from './src/screens/ExerciseDetailScreen';
+import ListExercisesMuscle from './src/screens/ListExercisesMuscle';
 registerTranslation('en-GB', enGB)
 
 // const Tab = createBottomTabNavigator();
@@ -22,17 +24,7 @@ export default function App() {
       <ToastProvider dangerIcon={<MaterialIcons name="error" size={24} color="white" />} duration={2000} placement='top'>
         <NavigationContainer>
           <StatusBar barStyle={"light-content"} />
-          <Stack.Navigator screenOptions={{
-            title: "Customer",
-            headerStyle: {
-              backgroundColor: "#1D2125",
-            },
-            headerTitleStyle: {
-              color: "#FFFFFF",
-            },
-            headerTitleAlign: 'center',
-            headerTintColor: "#FFFFFF",
-          }}>
+          <Stack.Navigator>
             <Stack.Screen
               name='Login'
               component={LoginScreen}
@@ -43,7 +35,18 @@ export default function App() {
             <Stack.Screen
               name='CustomerExerciseDetail'
               component={CustomerExerciseDetailScreen}
-              options={{ headerShown: true }}
+              options={{
+                headerShown: true,
+                title: "Customer",
+                headerStyle: {
+                  backgroundColor: "#1D2125",
+                },
+                headerTitleStyle: {
+                  color: "#FFFFFF",
+                },
+                headerTitleAlign: 'center',
+                headerTintColor: "#FFFFFF",
+              }}
             />
             <Stack.Screen
               name='Home'
@@ -54,6 +57,40 @@ export default function App() {
               name='PT'
               component={PTStack}
               options={{ headerShown: false }}
+            />
+
+            <Stack.Screen
+              name='ExerciseDetailScreen'
+              component={ExerciseDetailScreen}
+              options={{
+                headerShown: true,
+                title: "Exercise",
+                headerStyle: {
+                  backgroundColor: "#1D2125",
+                },
+                headerTitleStyle: {
+                  color: "#FFFFFF",
+                },
+                headerTitleAlign: 'center',
+                headerTintColor: "#FFFFFF",
+              }}
+            />
+
+            <Stack.Screen
+              name='Muscle'
+              component={ListExercisesMuscle}
+              options={{
+                headerShown: true,
+                title: "Muscle",
+                headerStyle: {
+                  backgroundColor: "#1D2125",
+                },
+                headerTitleStyle: {
+                  color: "#FFFFFF",
+                },
+                headerTitleAlign: 'center',
+                headerTintColor: "#FFFFFF",
+              }}
             />
           </Stack.Navigator>
         </NavigationContainer>

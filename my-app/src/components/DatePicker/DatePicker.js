@@ -16,8 +16,8 @@ const DatePicker = ({ open, date, setOpen, setDate, selectAssign, assign, setCre
   const onConfirmSingle = React.useCallback(
     (params) => {
       setOpen(false);
-      console.log(params.date);
       const dateObj = new Date(params.date);
+      dateObj.setHours(0,0,0,0);
       const dateTimestamp = dateObj.getTime();
       setDate(dateTimestamp);
       if (!assign) return;
@@ -27,7 +27,6 @@ const DatePicker = ({ open, date, setOpen, setDate, selectAssign, assign, setCre
         role: 'USER',
         refind: true,
       }
-      console.log(data);
       dispatch(findByUserAndDate(data))
       if (route.name === 'Lịch trình') return;
       setCreateAssign(true)

@@ -16,7 +16,7 @@ const ScheduleScreen = () => {
     let data = {
       role: 'USER',
       user: currentUser._id,
-      date: 1703437199000
+      date: 1703350800000
     }
     dispatch(findByUserAndDate(data))
   }, [])

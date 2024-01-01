@@ -26,16 +26,15 @@ const CustomerExerciseDetailScreen = () => {
   const [createAssign, setCreateAssign] = useState(false);
 
   useEffect(() => {
-    if(!createAssign) return ;
+    if (!createAssign) return;
     let data = {
       _id: null,
-      user: users.user,
+      user: users.user._id,
       pt: users.pt,
       date: date,
       exercises: [],
       nutritions: [],
     }
-    console.log(data);
     dispatch(create(data))
 
     setTimeout(() => {
@@ -52,17 +51,21 @@ const CustomerExerciseDetailScreen = () => {
     setAssign(selectAssign.data);
   }, [selectAssign])
 
+  const [count, setCount] = useState(0);
+
   useEffect(() => {
     if (!assign) return
-
-    setUsers({user: assign.user._id, pt: assign.pt})
+    if (count > 1) return
+    setUsers({ user: assign.user, pt: assign.pt })
     setDate(assign.date)
+    setCount((pre) => pre + 1)
   }, [assign])
 
   const nutritions = assign ? assign.nutritions : null;
   const exercises = assign ? assign.exercises : null;
 
-  const [isAssignNut, setIsAssignNut] = useState(false);
+  const [isAssignNut, setIsAssignNut] = useState(null);
+  console.log(assign);
 
   return (
     <ScrollView className="bg-[#1D2125] h-screen">
@@ -83,13 +86,13 @@ const CustomerExerciseDetailScreen = () => {
           <Image className="w-24 h-24" source={require('../../assets/user.png')} />
         </View>
         <View>
-          <Text className="text-center text-[18px] font-bold text-white mb-2">{assign.user.name}</Text>
+          <Text className="text-center text-[18px] font-bold text-white mb-2">{assign?.user.name}</Text>
         </View>
         <View className="flex flex-row justify-center mx-4">
           <View>
-            <Text className="text-[#9FADBC] mb-1 text-center">{assign.user.email}</Text>
-            <Text className="text-[#9FADBC] mb-1 text-center">{assign.user.height}cm</Text>
-            <Text className="text-[#9FADBC] mb-1 text-center">{assign.user.weight}kg</Text>
+            <Text className="text-[#9FADBC] mb-1 text-center">{assign?.user.email}</Text>
+            <Text className="text-[#9FADBC] mb-1 text-center">{assign?.user.height}cm</Text>
+            <Text className="text-[#9FADBC] mb-1 text-center">{assign?.user.weight}kg</Text>
           </View>
         </View>
 

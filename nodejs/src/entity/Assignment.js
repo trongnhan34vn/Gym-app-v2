@@ -5,6 +5,8 @@ const assignmentSchema = new Schema({
   exercises: [{ type: Schema.Types.ObjectId, ref: 'Exercise' }],
   pt: { type: Schema.Types.ObjectId, ref: 'User' },
   nutritions: [{ type: Schema.Types.ObjectId, ref: 'Nutrition' }],
+  lunch: [{ type: Schema.Types.ObjectId, ref: 'Nutrition' }],
+  dinner: [{ type: Schema.Types.ObjectId, ref: 'Nutrition' }],
   date: { type: Number, required: true },
   user: { type: Schema.Types.ObjectId, ref: 'User' },
   startTime: { type: Number },

@@ -9,6 +9,7 @@ import { useRoute } from '@react-navigation/native';
 
 const Nutrition = ({ nutritions, date, setDate, selectAssign, assign, setIsAssignNut, setToggleModal, setCreateAssign }) => {
   const route = useRoute();
+
   const getMeasure = (type) => {
     if (!selectAssign) return {
       total: 0,
@@ -36,8 +37,20 @@ const Nutrition = ({ nutritions, date, setDate, selectAssign, assign, setIsAssig
     }
   }
 
-  const handleModal = () => {
-    setIsAssignNut(true);
+  const handleModal = (meal) => {
+    console.log(meal);
+    switch (meal) {
+      case 'Bữa sáng':
+        setIsAssignNut({type: 'nutritions'});
+        break;
+      case 'Bữa trưa':
+        setIsAssignNut({type: 'lunch'});
+        break;
+      default:
+        setIsAssignNut({type: 'dinner'});
+        break;
+    }
+    
     setToggleModal(true);
   }
 
@@ -70,16 +83,18 @@ const Nutrition = ({ nutritions, date, setDate, selectAssign, assign, setIsAssig
       </Pressable>
 
       {selectAssign ? <View>
-        {nutritions && nutritions.map((nut, index) => {
-          return <NutritionItem key={nut._id} nutrition={nut} index={index} />
-        })}
+        <NutritionItem handleModal={handleModal} nutritions={nutritions} meal={'Bữa sáng'} />
+        <NutritionItem handleModal={handleModal} nutritions={assign.lunch} meal={'Bữa trưa'} />
+        <NutritionItem handleModal={handleModal} nutritions={assign.dinner} meal={'Bữa tối'} />
       </View> : <View className="mx-4">
-        <Text className="text-[#ccc] text-center text-[30px] opacity-60 mb-5 mt-4">Chưa có bữa ăn nào</Text>
+        <NutritionItem handleModal={handleModal} nutritions={nutritions} meal={'Bữa sáng'} />
+        <NutritionItem handleModal={handleModal} nutritions={assign.lunch} meal={'Bữa trưa'} />
+        <NutritionItem handleModal={handleModal} nutritions={assign.dinner} meal={'Bữa tối'} />
       </View>}
-      {route.name === 'Lịch trình' ? <View></View> :  <View className="mx-4">
+      {/* {route.name === 'Lịch trình' ? <View></View> :  <View className="mx-4">
         <Button onPress={handleModal} title='Lựa chọn bữa ăn' />
-      </View>}
-     
+      </View>} */}
+
       {/* <NutritionItem />
       <NutritionItem />
       <NutritionItem /> */}

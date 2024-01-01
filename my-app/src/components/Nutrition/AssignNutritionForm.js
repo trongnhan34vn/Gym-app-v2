@@ -6,7 +6,7 @@ import { nutritionSelector } from '../../redux/selector';
 import NutritionItem from './NutritionItem';
 import NutItem from '../Modal/NutItem';
 
-const AssignNutritionForm = ({checkedNuts, setCheckedNuts}) => {
+const AssignNutritionForm = ({ checkedNuts, setCheckedNuts }) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(findAll())
