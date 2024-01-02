@@ -151,7 +151,7 @@ const ModalComp = ({ isOpenModal, setOpenModal, isAssignExercise, assign, isAssi
 
               <Pressable onPress={() => closeModal()}><AntDesign name="close" size={24} color="white" /></Pressable>
             </View>
-            {showNut.data?.map(item => <NutItem nutrition={item} />)}
+            {showNut.data ? showNut.data.map(item => <NutItem key={item._id} nutrition={item} />) : <View><Text className="font-bold text-center text-white opacity-40">CHƯA CÓ CHẾ ĐỘ DINH DƯỠNG</Text></View>}
           </View>
         }
       </View>

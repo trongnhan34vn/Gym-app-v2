@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Image, Pressable, Text, View } from 'react-native'
 import ProgressBar from '../ProgressBar/ProgressBar'
 import { MaterialIcons } from '@expo/vector-icons';
@@ -8,7 +8,7 @@ import DatePicker from '../DatePicker/DatePicker';
 import { useRoute } from '@react-navigation/native';
 import ModalComp from '../Modal/ModalComp';
 
-const Nutrition = ({showNut, setShowNut, nutritions, date, setDate, selectAssign, assign, setIsAssignNut, setToggleModal, setCreateAssign, toggleModal }) => {
+const Nutrition = ({ showNut, setShowNut, nutritions, date, setDate, selectAssign, assign, setIsAssignNut, setToggleModal, setCreateAssign, toggleModal }) => {
   const route = useRoute();
 
   const getMeasure = (type) => {
@@ -38,6 +38,8 @@ const Nutrition = ({showNut, setShowNut, nutritions, date, setDate, selectAssign
     }
   }
 
+
+
   const handleModal = (meal) => {
     if (route.name !== 'Lịch trình') {
       switch (meal) {
@@ -52,15 +54,17 @@ const Nutrition = ({showNut, setShowNut, nutritions, date, setDate, selectAssign
           break;
       }
     } else {
+      console.log('selectAss------>', selectAssign);
+
       switch (meal) {
         case 'Bữa sáng':
-          setShowNut({ type: 'nutritions', data: nutritions });
+          setShowNut({ type: 'nutritions', data: selectAssign ? selectAssign.data.nutritions : null });
           break;
         case 'Bữa trưa':
-          setShowNut({ type: 'lunch', data: assign?.lunch });
+          setShowNut({ type: 'lunch', data: selectAssign ? selectAssign.data.lunch : null });
           break;
         default:
-          setShowNut({ type: 'dinner', data: assign?.dinner });
+          setShowNut({ type: 'dinner', data: selectAssign ? selectAssign.data.dinner : null });
           break;
       }
     }
