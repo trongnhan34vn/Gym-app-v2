@@ -30,7 +30,6 @@ const ExerciseItem = ({ exe, isAssignExercise, checkedExes, setCheckedExes }) =>
       const newArr = removeFromArray(checkedExes, exe._id);
       setCheckedExes(newArr)
     } else {
-      if (checkedExes.length > 5) return;
       setCheckedExes(() => [...checkedExes, exe._id]);
     }
   }

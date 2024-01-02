@@ -6,11 +6,14 @@ import { AntDesign } from '@expo/vector-icons';
 import { useDispatch } from 'react-redux'
 import { update } from '../../thunk/assignThunk';
 import AssignNutritionForm from '../Nutrition/AssignNutritionForm';
+import NutritionItem from '../Nutrition/NutritionItem';
+import NutItem from './NutItem';
 
-const ModalComp = ({ isOpenModal, setOpenModal, isAssignExercise, assign, isAssignNut, setIsAssignNut, setIsAssignExercise }) => {
+const ModalComp = ({ isOpenModal, setOpenModal, isAssignExercise, assign, isAssignNut, setIsAssignNut, setIsAssignExercise, showNut }) => {
   const dispatch = useDispatch();
   const closeModal = () => {
     setOpenModal(false);
+    if (!setIsAssignExercise && !setIsAssignNut) return;
     setIsAssignExercise(false);
     setIsAssignNut(false);
   }
@@ -88,6 +91,17 @@ const ModalComp = ({ isOpenModal, setOpenModal, isAssignExercise, assign, isAssi
     }
   }
 
+  const getShowNutName = () => {
+    switch (showNut.type) {
+      case "nutritions":
+        return "Bữa sáng"
+      case "lunch":
+        return "Bữa trưa"
+      default:
+        return "Bữa tối"
+    }
+  }
+
   return (
     <Modal
       // animationType="slide"
@@ -102,7 +116,7 @@ const ModalComp = ({ isOpenModal, setOpenModal, isAssignExercise, assign, isAssi
           <View>
             <View className="flex flex-row items-center justify-between gap-5 mb-5">
               <View className="flex flex-row items-center justify-between flex-1">
-                <Text className="font-bold text-white text-[16px]" >Lựa chọn bài tập ({checkedExes.length}/6)</Text>
+                <Text className="font-bold text-white text-[16px]" >Lựa chọn bài tập </Text>
                 <Button onPress={handleSubmit} title='Save' className="self-center" />
               </View>
 
@@ -124,6 +138,20 @@ const ModalComp = ({ isOpenModal, setOpenModal, isAssignExercise, assign, isAssi
               <Pressable onPress={() => closeModal()}><AntDesign name="close" size={24} color="white" /></Pressable>
             </View>
             <AssignNutritionForm checkedNuts={checkedNuts} setCheckedNuts={setCheckedNuts} />
+          </View>
+        }
+
+        {
+          showNut &&
+          <View>
+            <View className="flex flex-row items-center justify-between gap-5 mb-5">
+              <View className="flex flex-row items-center justify-between flex-1">
+                <Text className="font-bold text-white text-[16px]" >{getShowNutName()}</Text>
+              </View>
+
+              <Pressable onPress={() => closeModal()}><AntDesign name="close" size={24} color="white" /></Pressable>
+            </View>
+            {showNut.data?.map(item => <NutItem nutrition={item} />)}
           </View>
         }
       </View>

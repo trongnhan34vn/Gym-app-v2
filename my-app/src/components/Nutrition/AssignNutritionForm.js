@@ -16,9 +16,12 @@ const AssignNutritionForm = ({ checkedNuts, setCheckedNuts }) => {
 
   return (
     <ScrollView>
-      {nutritions.map((nut, index) => {
-        return <NutItem key={nut._id} nutrition={nut} index={index} checkedNuts={checkedNuts} setCheckedNuts={setCheckedNuts} />
-      })}
+      <View className="mb-16">
+        {nutritions.map((nut, index) => {
+          return <NutItem key={nut._id} nutrition={nut} index={index} checkedNuts={checkedNuts} setCheckedNuts={setCheckedNuts} />
+        })}
+      </View>
+
     </ScrollView>
   )
 }

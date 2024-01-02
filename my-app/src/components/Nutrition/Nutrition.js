@@ -6,8 +6,9 @@ import NutritionItem from './NutritionItem';
 import { formatDate } from '../../utils/utils';
 import DatePicker from '../DatePicker/DatePicker';
 import { useRoute } from '@react-navigation/native';
+import ModalComp from '../Modal/ModalComp';
 
-const Nutrition = ({ nutritions, date, setDate, selectAssign, assign, setIsAssignNut, setToggleModal, setCreateAssign }) => {
+const Nutrition = ({showNut, setShowNut, nutritions, date, setDate, selectAssign, assign, setIsAssignNut, setToggleModal, setCreateAssign, toggleModal }) => {
   const route = useRoute();
 
   const getMeasure = (type) => {
@@ -38,19 +39,31 @@ const Nutrition = ({ nutritions, date, setDate, selectAssign, assign, setIsAssig
   }
 
   const handleModal = (meal) => {
-    console.log(meal);
-    switch (meal) {
-      case 'Bữa sáng':
-        setIsAssignNut({type: 'nutritions'});
-        break;
-      case 'Bữa trưa':
-        setIsAssignNut({type: 'lunch'});
-        break;
-      default:
-        setIsAssignNut({type: 'dinner'});
-        break;
+    if (route.name !== 'Lịch trình') {
+      switch (meal) {
+        case 'Bữa sáng':
+          setIsAssignNut({ type: 'nutritions' });
+          break;
+        case 'Bữa trưa':
+          setIsAssignNut({ type: 'lunch' });
+          break;
+        default:
+          setIsAssignNut({ type: 'dinner' });
+          break;
+      }
+    } else {
+      switch (meal) {
+        case 'Bữa sáng':
+          setShowNut({ type: 'nutritions', data: nutritions });
+          break;
+        case 'Bữa trưa':
+          setShowNut({ type: 'lunch', data: assign?.lunch });
+          break;
+        default:
+          setShowNut({ type: 'dinner', data: assign?.dinner });
+          break;
+      }
     }
-    
     setToggleModal(true);
   }
 
@@ -84,17 +97,17 @@ const Nutrition = ({ nutritions, date, setDate, selectAssign, assign, setIsAssig
 
       {selectAssign ? <View>
         <NutritionItem handleModal={handleModal} nutritions={nutritions} meal={'Bữa sáng'} />
-        <NutritionItem handleModal={handleModal} nutritions={assign.lunch} meal={'Bữa trưa'} />
-        <NutritionItem handleModal={handleModal} nutritions={assign.dinner} meal={'Bữa tối'} />
-      </View> : <View className="mx-4">
-        <NutritionItem handleModal={handleModal} nutritions={nutritions} meal={'Bữa sáng'} />
-        <NutritionItem handleModal={handleModal} nutritions={assign.lunch} meal={'Bữa trưa'} />
-        <NutritionItem handleModal={handleModal} nutritions={assign.dinner} meal={'Bữa tối'} />
+        <NutritionItem handleModal={handleModal} nutritions={assign?.lunch} meal={'Bữa trưa'} />
+        <NutritionItem handleModal={handleModal} nutritions={assign?.dinner} meal={'Bữa tối'} />
+      </View> : <View>
+        <NutritionItem handleModal={handleModal} nutritions={selectAssign?.nutritions} meal={'Bữa sáng'} />
+        <NutritionItem handleModal={handleModal} nutritions={selectAssign?.lunch} meal={'Bữa trưa'} />
+        <NutritionItem handleModal={handleModal} nutritions={selectAssign?.dinner} meal={'Bữa tối'} />
       </View>}
       {/* {route.name === 'Lịch trình' ? <View></View> :  <View className="mx-4">
         <Button onPress={handleModal} title='Lựa chọn bữa ăn' />
       </View>} */}
-
+      {route.name === 'Lịch trình' && <ModalComp setOpenModal={setToggleModal} isOpenModal={toggleModal} showNut={showNut} />}
       {/* <NutritionItem />
       <NutritionItem />
       <NutritionItem /> */}

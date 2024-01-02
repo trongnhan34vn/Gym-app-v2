@@ -46,7 +46,7 @@ const CustomerExerciseItem = ({ assign }) => {
       <View>
         <Text className="mb-2 text-[#B6C2CF]">Bài tập:</Text>
         <View className="flex flex-row gap-4">
-          {exercises?.map(ex => {
+          {exercises?.slice(0,6).map(ex => {
             return <Image key={ex._id} className="rounded-[3px] w-10 h-10" source={{ uri: ex.image }} />
           })}
           {/* <Image className="rounded-[3px] w-10 h-10" source={require('../../../assets/img/exercise/bai_1.jpg')} />

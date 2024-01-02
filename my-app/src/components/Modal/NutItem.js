@@ -1,8 +1,10 @@
 import React from 'react'
 import { Image, Text, View } from 'react-native'
 import { RadioButton } from 'react-native-paper';
+import { useRoute } from '@react-navigation/native';
 
 const NutItem = ({ nutrition, checkedNuts, setCheckedNuts }) => {
+  const route = useRoute();
 
   const removeFromArray = (arr, value) => {
     const index = arr.indexOf(value);
@@ -23,6 +25,7 @@ const NutItem = ({ nutrition, checkedNuts, setCheckedNuts }) => {
   }
 
   const checkNut = () => {
+    if(!checkedNuts) return;
     if (checkedNuts.includes(nutrition._id)) {
       return 'checked';
     }
@@ -44,13 +47,13 @@ const NutItem = ({ nutrition, checkedNuts, setCheckedNuts }) => {
         {/* <View className="flex flex-row items-center justify-center">
           <Entypo className="" name="plus" size={24} color="white" />
         </View> */}
-        <View className="flex justify-center">
+        {route.name !== 'Lịch trình' && <View className="flex justify-center">
           <RadioButton
             value={nutrition._id}
             status={checkNut()}
             onPress={() => onCheck()}
           />
-        </View>
+        </View>} 
       </View>
       <View className="">
         <Text className="text-center text-white">{nutrition.kcal} kcal</Text>

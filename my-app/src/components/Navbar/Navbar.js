@@ -5,9 +5,10 @@ import Exercise from '../Exercise/Exercise';
 import Nutrition from '../Nutrition/Nutrition';
 import { HomeContext } from '../../context/HomeContext';
 import { assignSelector, userSelector } from '../../redux/selector';
-import {useSelector} from 'react-redux'
-import {useDispatch} from 'react-redux'
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { findById } from '../../thunk/assignThunk';
+import ModalComp from '../Modal/ModalComp';
 
 const Navbar = () => {
   const dispatch = useDispatch();
@@ -19,32 +20,39 @@ const Navbar = () => {
   ]);
 
   const assign = useSelector(assignSelector).userAssign;
-  
+
   const exercises = assign ? assign.exercises : null;
   const nutritions = assign ? assign.nutritions : null;
 
   const [date, setDate] = useState(assign ? assign.date : Date.now());
+  const [isAssignNut, setIsAssignNut] = useState(null)
+  const [toggleModal, setToggleModal] = useState(false);
 
   useEffect(() => {
-    if(!assign) return
+    if (!assign) return
     dispatch(findById(assign._id));
     setDate(assign.date)
-  },[assign])
+  }, [assign])
 
   const selectAssign = useSelector(assignSelector).selectAssign;
+  const [showNut, setShowNut] = useState(false);
+
 
   const renderScene = SceneMap({
     exercise: () => <Exercise exercises={exercises} date={assign ? assign.date : Date.now()} />,
-    nutrition: () => <Nutrition nutritions={nutritions} assign={assign} selectAssign={selectAssign} date={date} setDate={setDate} />,
+    nutrition: () => <Nutrition showNut={showNut} setShowNut={setShowNut} toggleModal={toggleModal} nutritions={nutritions} assign={assign} selectAssign={selectAssign} date={date} setDate={setDate} setIsAssignNut={setIsAssignNut} setToggleModal={setToggleModal} />,
   });
   return (
-    <TabView
-      navigationState={{ index, routes }}
-      renderScene={renderScene}
-      onIndexChange={setIndex}
-      initialLayout={{ width: layout.width }}
-      renderTabBar={(props) => <TabBar {...props} style={{ backgroundColor: '#A1BDD914' }} indicatorStyle={{ backgroundColor: '#579DFF' }} />}
-    />
+
+      <TabView
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={{ width: layout.width }}
+        renderTabBar={(props) => <TabBar {...props} style={{ backgroundColor: '#A1BDD914' }} indicatorStyle={{ backgroundColor: '#579DFF' }} />}
+      />
+
+
   )
 }
 

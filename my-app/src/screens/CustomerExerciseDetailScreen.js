@@ -65,7 +65,7 @@ const CustomerExerciseDetailScreen = () => {
   const exercises = assign ? assign.exercises : null;
 
   const [isAssignNut, setIsAssignNut] = useState(null);
-  console.log(assign);
+  // console.log(assign);
 
   return (
     <ScrollView className="bg-[#1D2125] h-screen">

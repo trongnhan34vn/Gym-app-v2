@@ -1,8 +1,12 @@
 import React from 'react'
 import { Image, Pressable, Text, View } from 'react-native'
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons';
+import { useRoute } from '@react-navigation/native';
 
 const NutritionItem = ({ nutrition, index, nutritions, handleModal, meal }) => {
+  const route = useRoute();
+
   const getMeal = () => {
     switch (index) {
       case 0:
@@ -43,13 +47,30 @@ const NutritionItem = ({ nutrition, index, nutritions, handleModal, meal }) => {
             </View>
           </View>
           <Pressable onPress={() => handleModal(meal)} className="flex flex-row items-center justify-center">
-            <Entypo className="" name="plus" size={24} color="white" />
+            {route.name === 'Lịch trình' ? <MaterialCommunityIcons name="information-outline" size={24} color="white" /> : <Entypo className="" name="plus" size={24} color="white" />}
           </Pressable>
         </View>
         <View className="">
           <Text className="text-center text-white">{getKCal()} kcal</Text>
         </View>
-      </View> : <View><Text>Something Error</Text></View>}
+      </View> : <View><View className="flex flex-row justify-between w-full border-b-[1px] border-b-[#A1BDD914] pb-2 mb-1">
+        <View className="flex flex-row gap-4">
+          <Image className="w-16 h-16 rounded-[5px]" source={{ uri: 'https://developers.google.com/static/maps/documentation/maps-static/images/error-image-generic.png?hl=vi' }} />
+          {/* <Image className="w-16 h-16 rounded-[5px]" source={{ uri: nutritions[0]?.image }} /> */}
+          <View>
+            <Text className="font-bold text-[18px] mb-2 text-white">{meal}</Text>
+            <Text className="text-[#B6C2CF]">Chưa có chế độ dinh dưỡng </Text>
+          </View>
+        </View>
+        <Pressable onPress={() => handleModal(meal)} className="flex flex-row items-center justify-center">
+          {route.name === 'Lịch trình' ? <MaterialCommunityIcons name="information-outline" size={24} color="white" /> : <Entypo className="" name="plus" size={24} color="white" />}
+        </Pressable>
+
+      </View>
+        <View className="">
+          <Text className="text-center text-white">0 kcal</Text>
+        </View>
+      </View>}
 
     </Pressable>
   )
